@@ -1,0 +1,6 @@
+flask
+flask-restful
+requests
+flask-sqlalchemy
+pymysql
+cryptography

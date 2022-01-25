@@ -1,0 +1,32 @@
+services:
+    mysql:
+        image: mysql
+        volumes:
+            - /storage/docker/mysql-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: vvs
+            MYSQL_ROOT_HOST: "%"
+        expose: 
+            - "3306"
+        networks:
+            - mynet
+    app:
+        image: myapp
+        ports:
+            - 0.0.0.0:5000:5000
+        working_dir: /app
+        environment:
+            MYSQL_HOST: mysql
+            MYSQL_USER: root
+            MYSQL_PASSWORD: vvs
+            MYSQL_DB: laureati2
+        depends_on:
+            - mysql
+        networks:
+            - mynet
+networks:
+    mynet:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.19.0.0/24
